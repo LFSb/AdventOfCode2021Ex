@@ -12,4 +12,7 @@ defmodule Adventofcode2021 do
     |> Enum.with_index()
     |> Enum.count(fn {_val, idx} -> isWindowLargerThanPreviousWindow(input, idx) == true end)
   end
+
+  def day2p1(input) do
+  end
 end
