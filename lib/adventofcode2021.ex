@@ -14,11 +14,6 @@ defmodule Adventofcode2021 do
   end
 
   def day2p1(input) do
-    tup = input
-    |> Enum.map(fn i -> String.split(i, " ") end)
-    |> Enum.map(fn item -> List.to_tuple(item) end)
-    |> Enum.each(fn (instruction) -> processInstruction(instruction, {0, 0}) end)
-
-    IO.puts(tup)
+    input = parseDirections(input) |> Enum.each(fn(instruction) -> processInstruction(instruction, {0, 0}) end) 
   end
 end
