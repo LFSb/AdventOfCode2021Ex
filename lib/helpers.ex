@@ -34,4 +34,15 @@ defmodule Helpers do
       _ -> IO.puts("You fucked up, dumbass")
     end
   end
+
+  def aimSights(input, pos) do
+    distance = elem(input, 1) |> String.to_integer()
+
+    case elem(input, 0) do
+      "forward" -> {elem(pos, 0) + distance, elem(pos, 1) + elem(pos, 2) * distance, elem(pos, 2)}
+      "up" -> {elem(pos, 0), elem(pos, 1), elem(pos, 2) - distance}
+      "down" -> {elem(pos, 0), elem(pos, 1), elem(pos, 2) + distance}
+      _ -> IO.puts("You fucked up, dumbass.")
+    end
+  end
 end

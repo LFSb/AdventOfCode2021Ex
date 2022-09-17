@@ -16,6 +16,13 @@ defmodule Adventofcode2021 do
   def day2p1(input) do
     parseDirections(input)
     |> Enum.reduce({0, 0}, fn input, acc -> processInstruction(input, acc) end)
-    |> Tuple.product
+    |> Tuple.product()
+  end
+
+  def day2p2(input) do
+    parseDirections(input)
+    |> Enum.reduce({0, 0, 0}, fn input, acc -> aimSights(input, acc) end)
+    |> Tuple.delete_at(2)
+    |> Tuple.product()
   end
 end
