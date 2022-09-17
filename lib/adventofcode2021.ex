@@ -14,6 +14,9 @@ defmodule Adventofcode2021 do
   end
 
   def day2p1(input) do
-    input = parseDirections(input) |> Enum.each(fn(instruction) -> processInstruction(instruction, {0, 0}) end) 
+    parseDirections(input)
+    |> Enum.map_reduce({0, 0}, fn input, acc -> {processInstruction(input, acc), processInstruction(input, acc)} end)
+    |> elem(1)
+    |> Tuple.product
   end
 end

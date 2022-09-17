@@ -29,8 +29,8 @@ defmodule Helpers do
 
     case elem(input, 0) do
       "forward" -> {elem(pos, 0), elem(pos, 1) + distance}
-      "up" -> {elem(pos, 0) + distance, elem(pos, 1)}
-      "down" -> {elem(pos, 0) - distance, elem(pos, 1)}
+      "up" -> {elem(pos, 0) - distance, elem(pos, 1)}
+      "down" -> {elem(pos, 0) + distance, elem(pos, 1)}
       _ -> IO.puts("You fucked up, dumbass")
     end
   end
