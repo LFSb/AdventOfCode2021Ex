@@ -25,4 +25,9 @@ defmodule Adventofcode2021 do
     |> Tuple.delete_at(2)
     |> Tuple.product()
   end
+
+  def day3p1(input) do
+    getColumnFrequencies(input) #We get a list of maps, containing the individual character frequencies per column. 
+    #From this, we should create two strings, representing a decimal number in base 2. One that's based on the MSB, and one that's based on the LSB.
+  end
 end

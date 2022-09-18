@@ -45,4 +45,22 @@ defmodule Helpers do
       _ -> IO.puts("You fucked up, dumbass.")
     end
   end
+
+  def getColumnWidth(input) do
+    input
+    |> Enum.fetch!(0)
+    |> String.length
+  end
+
+  def getColumnFrequencies(input) do
+    0..getColumnWidth(input)
+    |> Enum.map(fn idx -> input |> Enum.map(fn line -> line |> String.at(idx) end) end)
+    |> Enum.map(fn line -> line |> Enum.frequencies() end) # This gives us a 0-indexed list of character freqencies per column of input.
+  end
+
+  def convertToBinary(input) do
+    input 
+    |> Integer.parse(2) 
+    |> elem(0)
+  end
 end
