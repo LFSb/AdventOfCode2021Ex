@@ -40,6 +40,6 @@ defmodule Adventofcode2021Test do
   end
 
   test "day3p1 realinput" do
-    assert readSplitLinesForDay("3") |> Adventofcode2021.day3p1() == 2498354
+    assert readSplitLinesForDay("3") |> Adventofcode2021.day3p1() == 2_498_354
   end
 end
