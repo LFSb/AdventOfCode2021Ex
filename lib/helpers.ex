@@ -65,7 +65,7 @@ defmodule Helpers do
   end
 
   # Here, based on said 0-indexed list of character frequencies we should construct both the gamma and the epsilon rates.
-  def getRates(frequencies) do
+  def getPowerConsumption(frequencies) do
     inverted = frequencies
     |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end) # First, we invert the map for easier sorting.
 

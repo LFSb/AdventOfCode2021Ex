@@ -28,6 +28,6 @@ defmodule Adventofcode2021 do
 
   def day3p1(input) do
     getColumnFrequencies(input)
-    |> getRates
+    |> getPowerConsumption
   end
 end
