@@ -27,9 +27,7 @@ defmodule Adventofcode2021 do
   end
 
   def day3p1(input) do
-    # We get a list of maps, containing the individual character frequencies per column. 
     getColumnFrequencies(input)
-
-    # From this, we should create two strings, representing a decimal number in base 2. One that's based on the MSB, and one that's based on the LSB.
+    |> getRates
   end
 end
