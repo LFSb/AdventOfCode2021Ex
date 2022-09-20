@@ -85,6 +85,7 @@ defmodule Helpers do
   # Here, based on said 0-indexed list of character frequencies we should construct both the gamma and the epsilon rates.
   # The gamma rate is made up from the MSB (Most Significant Bit) in each column, the epsilon rate is made up from the LSB (Least Significant Bit) in each column.
   # The power consumption is then calculated by multiplying the decimal representation of the gamma rate and the epsilon rate.
+
   def getPowerConsumption(frequencies) do
     # First, we invert the map for easier sorting.
     inverted = frequencies |> invertMap
@@ -96,8 +97,19 @@ defmodule Helpers do
     gamma * epsilon
   end
 
+  def filterInputByIndex(input, fun) do
+    invertedFrequencies = input |> getColumnFrequencies |> invertMap
+
+    index = invertedFrequencies |> Enum.find_index(fun) # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
+
+    searchChar = invertedFrequencies |> Enum.find(fun) |> Enum.max |> elem(1) # This is not the optimal way to do this.
+
+    input |> Enum.filter(fn i -> i |> String.at(index) == searchChar end) #This is a rough outline as to how we can filter a list of strings based on the occurance of a specific character at a specific position in the string.    
+  end
+
   # Calculating the life support rating is similar to the power consumption, but a little different:
-  # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they 
+  # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they contain the MSB or LSB in a specific position. 
   def getLifeSupportRating(input) do
+     
   end
 end
