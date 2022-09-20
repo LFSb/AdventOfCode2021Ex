@@ -64,33 +64,40 @@ defmodule Helpers do
     |> Enum.map(fn line -> line |> Enum.frequencies() end)
   end
 
+  # This makes a lot of assumptions, but if you pass it "10110", it will return 22.
+  def convertToDecimal(input) do
+    input
+    |> Integer.parse(2)
+    |> elem(0)
+  end
+
+  def invertMap(map) do
+    map |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
+  end
+
+  def calculateRateByFunc(map, func) do
+    map
+    |> Enum.map(func)
+    |> Enum.map(fn t -> t |> elem(1) end)
+    |> Enum.join()
+  end
+
   # Here, based on said 0-indexed list of character frequencies we should construct both the gamma and the epsilon rates.
+  # The gamma rate is made up from the MSB (Most Significant Bit) in each column, the epsilon rate is made up from the LSB (Least Significant Bit) in each column.
+  # The power consumption is then calculated by multiplying the decimal representation of the gamma rate and the epsilon rate.
   def getPowerConsumption(frequencies) do
-    inverted =
-      frequencies
-      # First, we invert the map for easier sorting.
-      |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
+    # First, we invert the map for easier sorting.
+    inverted = frequencies |> invertMap
 
-    gamma =
-      inverted
-      |> Enum.map(fn m -> m |> Enum.max() end)
-      |> Enum.map(fn t -> t |> elem(1) end)
-      |> Enum.join()
-      |> convertToBinary
+    gamma = inverted |> calculateRateByFunc(fn m -> m |> Enum.max() end) |> convertToDecimal
 
-    epsilon =
-      inverted
-      |> Enum.map(fn m -> m |> Enum.min() end)
-      |> Enum.map(fn t -> t |> elem(1) end)
-      |> Enum.join()
-      |> convertToBinary
+    epsilon = inverted |> calculateRateByFunc(fn m -> m |> Enum.min() end) |> convertToDecimal
 
     gamma * epsilon
   end
 
-  def convertToBinary(input) do
-    input
-    |> Integer.parse(2)
-    |> elem(0)
+  # Calculating the life support rating is similar to the power consumption, but a little different:
+  # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they 
+  def getLifeSupportRating(input) do
   end
 end
