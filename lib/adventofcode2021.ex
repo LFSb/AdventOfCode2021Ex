@@ -35,6 +35,6 @@ defmodule Adventofcode2021 do
   end
   
   def day3p2(input) do
-    input |> filterInputByIndex(fn f -> f |> Map.keys |> length > 1 end) #TODO: This function is not optimal. It works up until where there's an equal occurance for characters in the frequency map, then it breaks down.
+    input 
   end
 end
