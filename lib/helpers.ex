@@ -97,12 +97,14 @@ defmodule Helpers do
     gamma * epsilon
   end
 
-  def filterInputByIndex(input, fun) do
+  def filterInputByIndex(input) do
     invertedFrequencies = input |> getColumnFrequencies |> invertMap
 
-    index = invertedFrequencies |> Enum.find_index(fun) # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
-
-    searchChar = invertedFrequencies |> Enum.find(fun) |> Enum.max |> elem(1) # This is not the optimal way to do this.
+    index = invertedFrequencies |> Enum.find_index(fn f -> f |> Map.keys |> length > 1 end) # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
+    
+    index = if index |> is_nil do -1 else index end
+    
+    searchChar = invertedFrequencies |> Enum.at(index) |> Enum.max |> elem(1)
 
     input |> Enum.filter(fn i -> i |> String.at(index) == searchChar end) #This is a rough outline as to how we can filter a list of strings based on the occurance of a specific character at a specific position in the string.    
   end
