@@ -1,5 +1,6 @@
 defmodule Adventofcode2021Test do
   import FileUtils
+  import Helpers
   use ExUnit.Case
   doctest Adventofcode2021
 
@@ -43,7 +44,19 @@ defmodule Adventofcode2021Test do
     assert readSplitLinesForDay("3") |> Adventofcode2021.day3p1() == 2_498_354
   end
 
-  test "day3p2 testinput" do
-    assert readSplitLinesForDay("3test") |> Adventofcode2021.day3p2() == 230
+  # test "day3p2 testinput" do
+  #   assert readSplitLinesForDay("3test") |> Adventofcode2021.day3p2() == 230
+  # end
+
+  test "day3p2 partial test msb true" do
+    msb = true
+    input = readSplitLinesForDay("3test") |> filterInputByIndex(msb)
+    assert input |> filterInputByIndex(msb) == ["10110", "10111", "10101", "10000"]
+  end
+
+  test "day3p2 partial test #2" do
+    msb = false
+    input = readSplitLinesForDay("3test") |> filterInputByIndex(msb)
+    assert input |> filterInputByIndex(msb) == ["01111", "01010"]
   end
 end

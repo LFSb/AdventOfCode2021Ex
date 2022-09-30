@@ -71,10 +71,6 @@ defmodule Helpers do
     |> elem(0)
   end
 
-  def invertMap(map) do
-    map |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
-  end
-
   def calculateRateByFunc(map, func) do
     map
     |> Enum.map(func)
@@ -96,31 +92,43 @@ defmodule Helpers do
 
     gamma * epsilon
   end
-  
+
+  def invertMap(map) do
+    map |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
+  end
+
   # This is probably not the best way to do this
-  def returnSearchChar(invertedFrequencies, index, msb) do
+  def returnSearchChar(frequencies, index, msb) do
+    invertedFrequencies = frequencies |> invertMap |> Enum.at(index)
+    
     case msb do
-      true -> invertedFrequencies |> Enum.at(index) |> Enum.max |> elem(1)
-      false -> invertedFrequencies |> Enum.at(index) |> Enum.min |> elem(1)
+      true -> invertedFrequencies |> Enum.max() |> elem(1)
+      false -> invertedFrequencies |> Enum.min() |> elem(1)
       _ -> IO.puts("Something went badly wrong")
     end
   end
 
   def filterInputByIndex(input, msb) do
-    invertedFrequencies = input |> getColumnFrequencies |> invertMap
+    frequencies = input |> getColumnFrequencies
 
-    index = invertedFrequencies |> Enum.find_index(fn f -> f |> Map.keys |> length > 1 end) # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
-    
-    index = if index |> is_nil do -1 else index end
-    
-    searchChar = invertedFrequencies |> returnSearchChar(index, msb)
+    # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
+    index = frequencies |> Enum.find_index(fn f -> f |> Map.keys() |> length > 1 end)
 
-    input |> Enum.filter(fn i -> i |> String.at(index) == searchChar end) #This is a rough outline as to how we can filter a list of strings based on the occurance of a specific character at a specific position in the string.    
+    index =
+      if index |> is_nil do
+        -1
+      else
+        index
+      end
+
+    searchChar = frequencies |> returnSearchChar(index, msb)
+
+    # This is a rough outline as to how we can filter a list of strings based on the occurance of a specific character at a specific position in the string.    
+    input |> Enum.filter(fn i -> i |> String.at(index) == searchChar end)
   end
 
   # Calculating the life support rating is similar to the power consumption, but a little different:
   # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they contain the MSB or LSB in a specific position. 
   def getLifeSupportRating(input) do
-     
   end
 end
