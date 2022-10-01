@@ -15,7 +15,7 @@ defmodule Adventofcode2021 do
 
   def day2p1(input) do
     input
-    |>parseDirections
+    |> parseDirections
     |> Enum.reduce({0, 0}, fn input, acc -> processInstruction(input, acc) end)
     |> Tuple.product()
   end
@@ -33,8 +33,8 @@ defmodule Adventofcode2021 do
     |> getColumnFrequencies
     |> getPowerConsumption
   end
-  
+
   def day3p2(input) do
-    input 
+    input
   end
 end

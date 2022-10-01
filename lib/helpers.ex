@@ -97,14 +97,23 @@ defmodule Helpers do
     map |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
   end
 
-  # This is probably not the best way to do this
-  def returnSearchChar(frequencies, index, msb) do
-    invertedFrequencies = frequencies |> invertMap |> Enum.at(index)
-    
+  def determineByMsb(frequency, msb) do
     case msb do
-      true -> invertedFrequencies |> Enum.max() |> elem(1)
-      false -> invertedFrequencies |> Enum.min() |> elem(1)
-      _ -> IO.puts("Something went badly wrong")
+      true -> frequency |> Enum.max |> elem(1)
+      false -> frequency |> Enum.min |> elem(1)
+    end
+  end
+
+  def returnSearchChar(frequencies, index, msb) do
+    frequency = frequencies |> Enum.at(index)
+
+    frequencyValues = frequency |> Map.values()
+
+    equal = Enum.at(frequencyValues, 0) == Enum.at(frequencyValues, 1)
+
+    case equal do
+      true -> if msb, do: "1", else: "0"
+      false -> frequency |> Map.new(fn {key, val} -> {val, key} end) |> determineByMsb(msb)
     end
   end
 
@@ -116,6 +125,7 @@ defmodule Helpers do
 
     index =
       if index |> is_nil do
+        # if the above can't find an index, compare the last occurance.
         -1
       else
         index
