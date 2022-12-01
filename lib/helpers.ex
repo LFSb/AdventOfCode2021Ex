@@ -99,8 +99,8 @@ defmodule Helpers do
 
   def determineByMsb(frequency, msb) do
     case msb do
-      true -> frequency |> Enum.max |> elem(1)
-      false -> frequency |> Enum.min |> elem(1)
+      true -> frequency |> Enum.max() |> elem(1)
+      false -> frequency |> Enum.min() |> elem(1)
     end
   end
 
