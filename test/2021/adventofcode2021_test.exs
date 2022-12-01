@@ -50,13 +50,13 @@ defmodule Adventofcode2021Test do
 
   test "day3p2 partial test msb true" do
     msb = true
-    input = readSplitLinesForDay("3test", "2021") |> filterInputByIndex(msb)
-    assert input |> filterInputByIndex(msb) == ["10110", "10111", "10101", "10000"]
+    input = readSplitLinesForDay("3test", "2021") |> filter_input_by_index(msb)
+    assert input |> filter_input_by_index(msb) == ["10110", "10111", "10101", "10000"]
   end
 
   test "day3p2 partial test #2" do
     msb = false
-    input = readSplitLinesForDay("3test", "2021") |> filterInputByIndex(msb)
-    assert input |> filterInputByIndex(msb) == ["01111", "01010"]
+    input = readSplitLinesForDay("3test", "2021") |> filter_input_by_index(msb)
+    assert input |> filter_input_by_index(msb) == ["01111", "01010"]
   end
 end

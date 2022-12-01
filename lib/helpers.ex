@@ -1,31 +1,31 @@
 defmodule Helpers do
   # Basically, we want n-1, but we don't want -1 as a result.
-  def safePreviousIdx(n) do
+  def safe_previous_idx(n) do
     if(n > 0, do: n - 1, else: n)
   end
 
-  def isValueLargerThanPreviousIdx(input, idx) do
-    Enum.at(input, idx) > Enum.at(input, safePreviousIdx(idx))
+  def is_value_larger_than_previous_idx(input, idx) do
+    Enum.at(input, idx) > Enum.at(input, safe_previous_idx(idx))
   end
 
-  def getWindowSum(input, idx) do
+  def get_window_sum(input, idx) do
     input
     |> Enum.drop(idx)
     |> Enum.take(3)
     |> Enum.sum()
   end
 
-  def isWindowLargerThanPreviousWindow(input, idx) do
-    getWindowSum(input, idx) > getWindowSum(input, safePreviousIdx(idx))
+  def is_window_larger_than_previous_window(input, idx) do
+    get_window_sum(input, idx) > get_window_sum(input, safe_previous_idx(idx))
   end
 
-  def parseDirections(input) do
+  def parse_directions(input) do
     input
     |> Enum.map(fn i -> String.split(i, " ") end)
     |> Enum.map(fn item -> List.to_tuple(item) end)
   end
 
-  def processInstruction(input, pos) do
+  def process_instruction(input, pos) do
     distance = elem(input, 1) |> String.to_integer()
 
     case elem(input, 0) do
@@ -36,7 +36,7 @@ defmodule Helpers do
     end
   end
 
-  def aimSights(input, pos) do
+  def aim_sights(input, pos) do
     distance = elem(input, 1) |> String.to_integer()
 
     case elem(input, 0) do
@@ -47,7 +47,7 @@ defmodule Helpers do
     end
   end
 
-  def getColumnWidth(input) do
+  def get_column_width(input) do
     width =
       input
       |> Enum.fetch!(0)
@@ -58,20 +58,20 @@ defmodule Helpers do
   end
 
   # This gives us a 0-indexed list of character freqencies per column of input.
-  def getColumnFrequencies(input) do
-    0..getColumnWidth(input)
+  def get_column_frequencies(input) do
+    0..get_column_width(input)
     |> Enum.map(fn idx -> input |> Enum.map(fn line -> line |> String.at(idx) end) end)
     |> Enum.map(fn line -> line |> Enum.frequencies() end)
   end
 
   # This makes a lot of assumptions, but if you pass it "10110", it will return 22.
-  def convertToDecimal(input) do
+  def convert_to_decimal(input) do
     input
     |> Integer.parse(2)
     |> elem(0)
   end
 
-  def calculateRateByFunc(map, func) do
+  def calculate_rate_by_func(map, func) do
     map
     |> Enum.map(func)
     |> Enum.map(fn t -> t |> elem(1) end)
@@ -82,29 +82,29 @@ defmodule Helpers do
   # The gamma rate is made up from the MSB (Most Significant Bit) in each column, the epsilon rate is made up from the LSB (Least Significant Bit) in each column.
   # The power consumption is then calculated by multiplying the decimal representation of the gamma rate and the epsilon rate.
 
-  def getPowerConsumption(frequencies) do
+  def get_power_consumption(frequencies) do
     # First, we invert the map for easier sorting.
-    inverted = frequencies |> invertMap
+    inverted = frequencies |> invert_map
 
-    gamma = inverted |> calculateRateByFunc(fn m -> m |> Enum.max() end) |> convertToDecimal
+    gamma = inverted |> calculate_rate_by_func(fn m -> m |> Enum.max() end) |> convert_to_decimal
 
-    epsilon = inverted |> calculateRateByFunc(fn m -> m |> Enum.min() end) |> convertToDecimal
+    epsilon = inverted |> calculate_rate_by_func(fn m -> m |> Enum.min() end) |> convert_to_decimal
 
     gamma * epsilon
   end
 
-  def invertMap(map) do
+  def invert_map(map) do
     map |> Enum.map(fn m -> m |> Map.new(fn {key, val} -> {val, key} end) end)
   end
 
-  def determineByMsb(frequency, msb) do
+  def determine_by_msb(frequency, msb) do
     case msb do
       true -> frequency |> Enum.max() |> elem(1)
       false -> frequency |> Enum.min() |> elem(1)
     end
   end
 
-  def returnSearchChar(frequencies, index, msb) do
+  def return_search_char(frequencies, index, msb) do
     frequency = frequencies |> Enum.at(index)
 
     frequencyValues = frequency |> Map.values()
@@ -113,12 +113,12 @@ defmodule Helpers do
 
     case equal do
       true -> if msb, do: "1", else: "0"
-      false -> frequency |> Map.new(fn {key, val} -> {val, key} end) |> determineByMsb(msb)
+      false -> frequency |> Map.new(fn {key, val} -> {val, key} end) |> determine_by_msb(msb)
     end
   end
 
-  def filterInputByIndex(input, msb) do
-    frequencies = input |> getColumnFrequencies
+  def filter_input_by_index(input, msb) do
+    frequencies = input |> get_column_frequencies
 
     # Here we get the first index of a map inside the frequencies that has more than one key. That should give us the index of the character in the search space we should filter.
     index = frequencies |> Enum.find_index(fn f -> f |> Map.keys() |> length > 1 end)
@@ -131,7 +131,7 @@ defmodule Helpers do
         index
       end
 
-    searchChar = frequencies |> returnSearchChar(index, msb)
+    searchChar = frequencies |> return_search_char(index, msb)
 
     # This is a rough outline as to how we can filter a list of strings based on the occurance of a specific character at a specific position in the string.    
     input |> Enum.filter(fn i -> i |> String.at(index) == searchChar end)
@@ -139,6 +139,12 @@ defmodule Helpers do
 
   # Calculating the life support rating is similar to the power consumption, but a little different:
   # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they contain the MSB or LSB in a specific position. 
-  def getLifeSupportRating(input) do
+  def get_life_support_rating(input) do
+  end
+
+  def chunk_by_empty(input) do
+    input
+    |> Enum.chunk_by(fn i -> i == "" end)
+    |> Enum.reject(fn chunk -> chunk |> List.first == "" end)
   end
 end

@@ -1,6 +1,5 @@
 defmodule Adventofcode2022Test do
     import FileUtils
-    import Helpers
     use ExUnit.Case
     doctest Adventofcode2022
 
@@ -17,6 +16,6 @@ defmodule Adventofcode2022Test do
     end
 
     test "day1p2 realinput" do
-        assert readSplitLinesForDay("1", "2022") |> Adventofcode2022.day1p2() == 45000
+        assert readSplitLinesForDay("1", "2022") |> Adventofcode2022.day1p2() == 200044
     end
 end
