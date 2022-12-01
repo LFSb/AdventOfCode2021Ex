@@ -88,7 +88,8 @@ defmodule Helpers do
 
     gamma = inverted |> calculate_rate_by_func(fn m -> m |> Enum.max() end) |> convert_to_decimal
 
-    epsilon = inverted |> calculate_rate_by_func(fn m -> m |> Enum.min() end) |> convert_to_decimal
+    epsilon =
+      inverted |> calculate_rate_by_func(fn m -> m |> Enum.min() end) |> convert_to_decimal
 
     gamma * epsilon
   end
@@ -145,6 +146,6 @@ defmodule Helpers do
   def chunk_by_empty(input) do
     input
     |> Enum.chunk_by(fn i -> i == "" end)
-    |> Enum.reject(fn chunk -> chunk |> List.first == "" end)
+    |> Enum.reject(fn chunk -> chunk |> List.first() == "" end)
   end
 end
