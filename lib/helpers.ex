@@ -170,7 +170,7 @@ defmodule Helpers do
 
     own_index = own_hand_score - 1
     other_index = opponent_hand_score - 1
-    
+
     cond do
       own_index == rem(other_index + 1, 3) -> 6 + own_hand_score
       own_index == other_index -> 3 + own_hand_score
@@ -192,25 +192,28 @@ defmodule Helpers do
   def calculate_desired_round_result(opponent_hand, desired_result) do
     calculated_result = desired_result |> calculate_desired_result
 
-    case {opponent_hand, calculated_result} do
-      # Draw
-      {"A", 3} -> calculate_hand_score("X") + calculated_result
-      # Lose
-      {"A", 0} -> calculate_hand_score("Z") + calculated_result
-      # Win
-      {"A", 6} -> calculate_hand_score("Y") + calculated_result
-      # Draw
-      {"B", 3} -> calculate_hand_score("Y") + calculated_result
-      # Lose
-      {"B", 0} -> calculate_hand_score("X") + calculated_result
-      # Win
-      {"B", 6} -> calculate_hand_score("Z") + calculated_result
-      # Draw
-      {"C", 3} -> calculate_hand_score("Z") + calculated_result
-      # Lose
-      {"C", 0} -> calculate_hand_score("Y") + calculated_result
-      # Win
-      {"C", 6} -> calculate_hand_score("X") + calculated_result
+    opponent_hand_score = opponent_hand |> calculate_hand_score
+
+    case calculated_result do
+      6 -> if rem(opponent_hand_score + 1, 3) == 0, do: 3 + calculated_result, else: rem(opponent_hand_score + 1, 3) + calculated_result
+
+      3 -> opponent_hand_score + calculated_result
+
+      0 -> if opponent_hand_score - 1 == 0, do: 3, else: opponent_hand_score - 1
     end
+
+    # case {opponent_hand_score, calculated_result} do
+    #     {3, 6} -> 1 + calculated_result # Win
+    #     {1, 6} -> 2 + calculated_result # Win
+    #     {2, 6} -> 3 + calculated_result # Win
+
+    #     {1, 3} -> 1 + calculated_result # Draw
+    #     {2, 3} -> 2 + calculated_result # Draw
+    #     {3, 3} -> 3 + calculated_result # Draw
+
+    #     {2, 0} -> 1 + calculated_result # Lose
+    #     {3, 0} -> 2 + calculated_result # Lose
+    #     {1, 0} -> 3 + calculated_result # Lose
+    # end
   end
 end
