@@ -140,8 +140,8 @@ defmodule Helpers do
 
   # Calculating the life support rating is similar to the power consumption, but a little different:
   # Instead of taking the MSB and LSB of each of the columns, We should filter the search space by whether or not they contain the MSB or LSB in a specific position. 
-  def get_life_support_rating(input) do
-  end
+  # def get_life_support_rating(input) do
+  # end
 
   def chunk_by_empty(input) do
     input
@@ -171,19 +171,19 @@ defmodule Helpers do
 
     # win = 6, draw = 3, 0 = lose 
     own_hand_score = own_hand |> calculate_hand_score
+    opponent_hand_score = opponent_hand |> calculate_hand_score
 
-    case {own_hand, calculate_hand_score(opponent_hand) + own_hand_score} do
-      {"Y", 3} -> 6 + own_hand_score
-      {"Y", 4} -> 3 + own_hand_score
-      {"Y", 5} -> 0 + own_hand_score
-      {"Z", 5} -> 6 + own_hand_score
-      {"Z", 6} -> 3 + own_hand_score
-      {"Z", 4} -> 0 + own_hand_score
-      {"X", 4} -> 6 + own_hand_score
-      {"X", 2} -> 3 + own_hand_score
-      {"X", 3} -> 0 + own_hand_score
-      _ -> 0
+    possibilities = [1, 2, 3]
+
+    own_index = possibilities |> Enum.find_index(fn x -> x == own_hand_score end)
+    other_index = possibilities |> Enum.find_index(fn x -> x == opponent_hand_score end)
+    
+    cond do
+      own_index == rem(other_index + 1, 3) -> 6 + own_hand_score
+      own_index == other_index -> 3 + own_hand_score
+      other_index == rem(own_index + 1, 3) -> 0 + own_hand_score
     end
+
   end
 
   def calculate_desired_result(input) do
