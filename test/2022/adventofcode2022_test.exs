@@ -1,5 +1,6 @@
 defmodule Adventofcode2022Test do
   import FileUtils
+  import Helpers
   use ExUnit.Case
   doctest Adventofcode2022
 
@@ -17,5 +18,17 @@ defmodule Adventofcode2022Test do
 
   test "day1p2 realinput" do
     assert readSplitLinesForDay("1", "2022") |> Adventofcode2022.day1p2() == 200_044
+  end
+
+  test "day2p1 results" do
+    assert calculate_round_result("A", "Y") == 8
+  end
+
+  test "day2p1 testinput" do
+    assert readSplitLinesForDay("2test", "2022") |> Adventofcode2022.day2p1() == 15
+  end
+
+  test "day2p1 realinput" do
+    assert readSplitLinesForDay("2", "2022") |> Adventofcode2022.day2p1() == 15
   end
 end

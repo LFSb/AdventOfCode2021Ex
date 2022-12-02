@@ -148,4 +148,41 @@ defmodule Helpers do
     |> Enum.chunk_by(fn i -> i == "" end)
     |> Enum.reject(fn chunk -> chunk |> List.first() == "" end)
   end
+
+  def calculate_hand_score(own_hand) do
+    case own_hand do
+      # Rock
+      "X" -> 1
+      "A" -> 1
+      # Paper
+      "Y" -> 2
+      "B" -> 2
+      # Scissors
+      "Z" -> 3
+      "C" -> 3
+      _ -> 0
+    end
+  end
+
+  def calculate_round_result(opponent_hand, own_hand) do
+    # Rock (X, 1) -> Scissors (Z, 3)
+    # Scissors (Z, 3) -> Paper (Y, 2)
+    # Paper (Y, 2) -> Rock (X, 1)
+
+    # win = 6, draw = 3, 0 = lose 
+    own_hand_score = own_hand |> calculate_hand_score
+
+    case {own_hand, calculate_hand_score(opponent_hand) + own_hand_score} do
+      {"Y", 3} -> 6 + own_hand_score
+      {"Y", 4} -> 3 + own_hand_score
+      {"Y", 5} -> 0 + own_hand_score
+      {"Z", 5} -> 6 + own_hand_score
+      {"Z", 6} -> 3 + own_hand_score
+      {"Z", 4} -> 0 + own_hand_score
+      {"X", 4} -> 6 + own_hand_score
+      {"X", 2} -> 3 + own_hand_score
+      {"X", 3} -> 0 + own_hand_score
+      _ -> 0
+    end
+  end
 end
