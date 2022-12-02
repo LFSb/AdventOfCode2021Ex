@@ -198,20 +198,27 @@ defmodule Helpers do
   end
 
   def calculate_desired_round_result(opponent_hand, desired_result) do
-    
     calculated_result = desired_result |> calculate_desired_result
 
     case {opponent_hand, calculated_result} do
-      {"A", 3} -> calculate_hand_score("X") + calculated_result # Draw
-      {"A", 0} -> calculate_hand_score("Z") + calculated_result # Lose
-      {"A", 6} -> calculate_hand_score("Y") + calculated_result # Win
-      {"B", 3} -> calculate_hand_score("Y") + calculated_result # Draw
-      {"B", 0} -> calculate_hand_score("X") + calculated_result # Lose
-      {"B", 6} -> calculate_hand_score("Z") + calculated_result # Win
-      {"C", 3} -> calculate_hand_score("Z") + calculated_result # Draw
-      {"C", 0} -> calculate_hand_score("Y") + calculated_result # Lose
-      {"C", 6} -> calculate_hand_score("X") + calculated_result # Win
-
+      # Draw
+      {"A", 3} -> calculate_hand_score("X") + calculated_result
+      # Lose
+      {"A", 0} -> calculate_hand_score("Z") + calculated_result
+      # Win
+      {"A", 6} -> calculate_hand_score("Y") + calculated_result
+      # Draw
+      {"B", 3} -> calculate_hand_score("Y") + calculated_result
+      # Lose
+      {"B", 0} -> calculate_hand_score("X") + calculated_result
+      # Win
+      {"B", 6} -> calculate_hand_score("Z") + calculated_result
+      # Draw
+      {"C", 3} -> calculate_hand_score("Z") + calculated_result
+      # Lose
+      {"C", 0} -> calculate_hand_score("Y") + calculated_result
+      # Win
+      {"C", 6} -> calculate_hand_score("X") + calculated_result
     end
   end
 end
