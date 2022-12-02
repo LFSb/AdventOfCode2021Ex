@@ -160,30 +160,22 @@ defmodule Helpers do
       # Scissors
       "Z" -> 3
       "C" -> 3
-      _ -> 0
+      _ -> -1
     end
   end
 
   def calculate_round_result(opponent_hand, own_hand) do
-    # Rock (X, 1) -> Scissors (Z, 3)
-    # Scissors (Z, 3) -> Paper (Y, 2)
-    # Paper (Y, 2) -> Rock (X, 1)
-
-    # win = 6, draw = 3, 0 = lose 
     own_hand_score = own_hand |> calculate_hand_score
     opponent_hand_score = opponent_hand |> calculate_hand_score
 
-    possibilities = [1, 2, 3]
-
-    own_index = possibilities |> Enum.find_index(fn x -> x == own_hand_score end)
-    other_index = possibilities |> Enum.find_index(fn x -> x == opponent_hand_score end)
+    own_index = own_hand_score - 1
+    other_index = opponent_hand_score - 1
     
     cond do
       own_index == rem(other_index + 1, 3) -> 6 + own_hand_score
       own_index == other_index -> 3 + own_hand_score
       other_index == rem(own_index + 1, 3) -> 0 + own_hand_score
     end
-
   end
 
   def calculate_desired_result(input) do
