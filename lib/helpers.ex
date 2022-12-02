@@ -201,19 +201,5 @@ defmodule Helpers do
 
       0 -> if opponent_hand_score - 1 == 0, do: 3, else: opponent_hand_score - 1
     end
-
-    # case {opponent_hand_score, calculated_result} do
-    #     {3, 6} -> 1 + calculated_result # Win
-    #     {1, 6} -> 2 + calculated_result # Win
-    #     {2, 6} -> 3 + calculated_result # Win
-
-    #     {1, 3} -> 1 + calculated_result # Draw
-    #     {2, 3} -> 2 + calculated_result # Draw
-    #     {3, 3} -> 3 + calculated_result # Draw
-
-    #     {2, 0} -> 1 + calculated_result # Lose
-    #     {3, 0} -> 2 + calculated_result # Lose
-    #     {1, 0} -> 3 + calculated_result # Lose
-    # end
   end
 end
