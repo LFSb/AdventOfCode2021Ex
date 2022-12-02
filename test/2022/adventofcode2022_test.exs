@@ -20,7 +20,7 @@ defmodule Adventofcode2022Test do
     assert readSplitLinesForDay("1", "2022") |> Adventofcode2022.day1p2() == 200_044
   end
 
-  test "day2p1 results" do
+  test "day2p1 results line up with expectation" do
     assert calculate_round_result("A", "Y") == 8
   end
 
@@ -30,6 +30,10 @@ defmodule Adventofcode2022Test do
 
   test "day2p1 realinput" do
     assert readSplitLinesForDay("2", "2022") |> Adventofcode2022.day2p1() == 11386
+  end
+
+  test "day2p2 results line up with expectation" do
+    assert calculate_desired_round_result("A", "Y") == 4
   end
 
   test "day2p2 testinput" do
