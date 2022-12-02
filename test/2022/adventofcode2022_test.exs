@@ -29,6 +29,6 @@ defmodule Adventofcode2022Test do
   end
 
   test "day2p1 realinput" do
-    assert readSplitLinesForDay("2", "2022") |> Adventofcode2022.day2p1() == 15
+    assert readSplitLinesForDay("2", "2022") |> Adventofcode2022.day2p1() == 11386
   end
 end
