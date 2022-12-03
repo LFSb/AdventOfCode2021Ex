@@ -43,6 +43,10 @@ defmodule Adventofcode2022 do
         |> Enum.uniq 
         |> MapSet.new() end) 
       |> intersect
+      |> MapSet.to_list
+      |> Enum.at(0)
+      |> convert_to_priority
       end) 
+    |> Enum.sum()
   end
 end
