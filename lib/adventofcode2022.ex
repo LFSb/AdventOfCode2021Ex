@@ -50,4 +50,18 @@ defmodule Adventofcode2022 do
     end)
     |> Enum.sum()
   end
+
+  def day3p2(input) do
+    input
+    |> Enum.chunk_every(3)
+    |> Enum.map(fn group ->
+      group
+      |> Enum.map(fn line -> line |> String.graphemes() |> Enum.uniq() |> MapSet.new() end)
+      |> intersect_3
+      |> MapSet.to_list()
+      |> Enum.join()
+      |> convert_to_priority
+    end)
+    |> Enum.sum()
+  end
 end

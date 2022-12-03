@@ -205,6 +205,11 @@ defmodule Helpers do
     MapSet.intersection(Enum.at(mapsets, 0), Enum.at(mapsets, 1))
   end
 
+  def intersect_3(mapsets) do
+    intersect = MapSet.intersection(Enum.at(mapsets, 0), Enum.at(mapsets, 1))
+    MapSet.intersection(intersect, Enum.at(mapsets, 2))
+  end
+
   def convert_to_priority(item) do
     <<c::utf8>> = item
 
