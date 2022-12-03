@@ -33,20 +33,21 @@ defmodule Adventofcode2022 do
   end
 
   def day3p1(input) do
-    input 
-    |> Enum.map(fn x -> 
-      x 
-      |> String.graphemes 
-      |> Enum.chunk_every(x |> get_half_length) 
-      |> Enum.map(fn y -> 
-        y 
-        |> Enum.uniq 
-        |> MapSet.new() end) 
+    input
+    |> Enum.map(fn line ->
+      line
+      |> String.graphemes()
+      |> Enum.chunk_every(line |> get_half_length)
+      |> Enum.map(fn chunk ->
+        chunk
+        |> Enum.uniq()
+        |> MapSet.new()
+      end)
       |> intersect
-      |> MapSet.to_list
+      |> MapSet.to_list()
       |> Enum.at(0)
       |> convert_to_priority
-      end) 
+    end)
     |> Enum.sum()
   end
 end
