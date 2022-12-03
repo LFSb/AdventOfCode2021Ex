@@ -43,4 +43,12 @@ defmodule Adventofcode2022Test do
   test "day2p2 realinput" do
     assert readSplitLinesForDay("2", "2022") |> Adventofcode2022.day2p2() == 13600
   end
+
+  test "string to int conversion for day3 #1" do
+    assert ("a" |> convert_to_priority) + ("A" |> convert_to_priority) == 28
+  end
+
+  test "string to int conversion for day3 #2" do
+    assert ("z" |> convert_to_priority) + ("Z" |> convert_to_priority) == 78
+  end 
 end

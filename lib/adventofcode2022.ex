@@ -31,4 +31,18 @@ defmodule Adventofcode2022 do
     |> Enum.map(fn x -> calculate_desired_round_result(elem(x, 0), elem(x, 1)) end)
     |> Enum.sum()
   end
+
+  def day3p1(input) do
+    input 
+    |> Enum.map(fn x -> 
+      x 
+      |> String.graphemes 
+      |> Enum.chunk_every(x |> get_half_length) 
+      |> Enum.map(fn y -> 
+        y 
+        |> Enum.uniq 
+        |> MapSet.new() end) 
+      |> intersect
+      end) 
+  end
 end

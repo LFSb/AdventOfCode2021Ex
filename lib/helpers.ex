@@ -195,11 +195,29 @@ defmodule Helpers do
     opponent_hand_score = opponent_hand |> calculate_hand_score
 
     case calculated_result do
-      6 -> if rem(opponent_hand_score + 1, 3) == 0, do: 3 + calculated_result, else: rem(opponent_hand_score + 1, 3) + calculated_result
+      6 -> rem(opponent_hand_score, 3) + 1 + calculated_result
 
       3 -> opponent_hand_score + calculated_result
 
       0 -> if opponent_hand_score - 1 == 0, do: 3, else: opponent_hand_score - 1
     end
+  end
+
+  def intersect(mapsets) do
+    MapSet.intersection(Enum.at(mapsets, 0), Enum.at(mapsets, 1))
+  end
+
+  def convert_to_priority(item) do
+    <<c::utf8>> = item
+    
+    if c > 96 do
+      c - 96
+    else
+      c - 38
+    end
+  end
+
+  def get_half_length(input) do
+    String.length(input) / 2 |> round
   end
 end
