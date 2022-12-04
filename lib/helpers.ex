@@ -233,4 +233,14 @@ defmodule Helpers do
     (elem(first, 0) >= elem(second, 0) && elem(first, 1) <= elem(second, 1)) ||
       (elem(second, 0) >= elem(first, 0) && elem(second, 1) <= elem(first, 1))
   end
+
+  def ranges_overlap(a) do
+    first = Enum.at(a, 0)
+    second = Enum.at(a, 1)
+
+    firstRange = elem(first, 0)..elem(first, 1) |> MapSet.new()
+    secondRange = elem(second, 0)..elem(second, 1) |> MapSet.new()
+
+    MapSet.intersection(firstRange, secondRange) |> MapSet.size != 0
+  end
 end

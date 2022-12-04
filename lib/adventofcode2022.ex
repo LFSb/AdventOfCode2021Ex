@@ -80,4 +80,20 @@ defmodule Adventofcode2022 do
     end)
     |> Enum.count(fn range -> range == true end)
   end
+
+  def day4p2(input) do
+    input
+    |> Enum.map(fn line ->
+      line
+      |> String.split(",")
+      |> Enum.map(fn group ->
+        group
+        |> String.split("-")
+        |> Enum.map(fn pair -> pair |> String.to_integer() end)
+        |> List.to_tuple()
+      end)
+      |> ranges_overlap
+    end)
+    |> Enum.count(fn range -> range == true end)
+  end
 end
