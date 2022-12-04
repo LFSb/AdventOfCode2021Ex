@@ -206,8 +206,10 @@ defmodule Helpers do
   end
 
   def intersect_3(mapsets) do
-    intersect = MapSet.intersection(Enum.at(mapsets, 0), Enum.at(mapsets, 1))
-    MapSet.intersection(intersect, Enum.at(mapsets, 2))
+    MapSet.intersection(
+      MapSet.intersection(Enum.at(mapsets, 0), Enum.at(mapsets, 1)),
+      Enum.at(mapsets, 2)
+    )
   end
 
   def convert_to_priority(item) do
@@ -222,5 +224,13 @@ defmodule Helpers do
 
   def get_half_length(input) do
     (String.length(input) / 2) |> round
+  end
+
+  def contains_range(a) do
+    first = Enum.at(a, 0)
+    second = Enum.at(a, 1)
+
+    (elem(first, 0) >= elem(second, 0) && elem(first, 1) <= elem(second, 1)) ||
+      (elem(second, 0) >= elem(first, 0) && elem(second, 1) <= elem(first, 1))
   end
 end

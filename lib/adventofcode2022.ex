@@ -64,4 +64,20 @@ defmodule Adventofcode2022 do
     end)
     |> Enum.sum()
   end
+
+  def day4p1(input) do
+    input
+    |> Enum.map(fn line ->
+      line
+      |> String.split(",")
+      |> Enum.map(fn group ->
+        group
+        |> String.split("-")
+        |> Enum.map(fn pair -> pair |> String.to_integer() end)
+        |> List.to_tuple()
+      end)
+      |> contains_range
+    end)
+    |> Enum.count(fn range -> range == true end)
+  end
 end
