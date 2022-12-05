@@ -80,8 +80,11 @@ defmodule Adventofcode2022Test do
     assert readSplitLinesForDay("4test", "2022") |> Adventofcode2022.day4p2() == 4
   end
 
-
   test "day4p2 realinput" do
     assert readSplitLinesForDay("4", "2022") |> Adventofcode2022.day4p2() == 909
+  end
+
+  test "day5p1 test tower input" do
+    assert ["    [D]    ", "[N] [C]    ", "[Z] [M] [P]", " 1   2   3 "] |> build_tower |> Enum.at(0) == {"Z", "N", " "}
   end
 end

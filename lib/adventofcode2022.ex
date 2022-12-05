@@ -96,4 +96,17 @@ defmodule Adventofcode2022 do
     end)
     |> Enum.count(fn range -> range == true end)
   end
+
+  def day5p1(input) do
+    tower =
+      input
+      |> chunk_by_empty
+      |> Enum.at(0)
+
+    tower
+    |> Enum.reverse
+    |> Enum.map(fn x -> x |> String.graphemes() |> Enum.drop(1) |> Enum.take_every(4) end)
+    |> Enum.drop(1)
+    |> Enum.zip
+  end
 end

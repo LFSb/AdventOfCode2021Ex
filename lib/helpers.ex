@@ -241,6 +241,14 @@ defmodule Helpers do
     firstMapSet = elem(first, 0)..elem(first, 1) |> MapSet.new()
     secondMapSet = elem(second, 0)..elem(second, 1) |> MapSet.new()
 
-    MapSet.intersection(firstMapSet, secondMapSet) |> MapSet.size != 0
+    MapSet.intersection(firstMapSet, secondMapSet) |> MapSet.size() != 0
+  end
+
+  def build_tower(input) do
+    input 
+    |> Enum.reverse
+    |> Enum.map(fn x -> x |> String.graphemes |> Enum.drop(1) |> Enum.take_every(4) end)
+    |> Enum.drop(1)
+    |> Enum.zip
   end
 end
