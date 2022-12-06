@@ -111,6 +111,14 @@ defmodule Adventofcode2022Test do
   end
 
   test "day6p1 realinput" do
-    assert readLinesForDay("6", "2022") |> Adventofcode2022.day6p1() == 0
+    assert readLinesForDay("6", "2022") |> Adventofcode2022.day6p1() == 1210
+  end
+
+  test "day6p2 testinput #1" do
+    assert "mjqjpqmgbljsphdztnvjfqwrcgsmlb" |> Adventofcode2022.day6p2() == 19
+  end
+
+  test "day6p2 realinput" do
+    assert readLinesForDay("6", "2022") |> Adventofcode2022.day6p2() == 3476
   end
 end

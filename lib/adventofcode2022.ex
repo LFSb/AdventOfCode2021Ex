@@ -111,17 +111,10 @@ defmodule Adventofcode2022 do
   end
 
   def day6p1(input) do
-    graph = input |> String.graphemes()
+    input |> find_marker(4)
+  end
 
-    (Enum.to_list(0..String.length(input))
-     |> Enum.map(fn x ->
-       graph
-       |> Enum.drop(x)
-       |> Enum.take(4)
-       |> Enum.frequencies()
-       |> Map.values()
-       |> Enum.all?(fn x -> x == 1 end)
-     end)
-     |> Enum.find_index(fn x -> x == true end)) + 4
+  def day6p2(input) do
+    input |> find_marker(14)
   end
 end
