@@ -109,4 +109,10 @@ defmodule Adventofcode2022 do
     |> Enum.drop(1)
     |> Enum.zip
   end
+
+  def day6p1(input) do
+    graph = input |> String.graphemes
+
+    (Enum.to_list(0..String.length(input)) |> Enum.map(fn x -> graph |> Enum.drop(x) |> Enum.take(4) |> Enum.frequencies |> Map.values |> Enum.all?(fn x -> x == 1 end) end) |> Enum.find_index(fn x -> x == true end)) + 4
+  end
 end
