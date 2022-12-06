@@ -266,14 +266,36 @@ defmodule Helpers do
   def move_top(tower, source, target) do
     empty_place = " "
     source_tower = tower |> Enum.at(source - 1)
-    index_to_retrieve = source_tower |> Enum.find_index(fn x -> x != empty_place end) || -1
+    index_to_retrieve = source_tower |> Enum.find_index(fn x -> x != empty_place end) || 0
     target_tower = tower |> Enum.at(target - 1)
-    index_to_insert = target_tower |> Enum.find_index(fn x -> x != empty_place end) || -1
+    index_to_insert = target_tower |> Enum.find_index(fn x -> x != empty_place end) || 0
 
     target_tower =
       target_tower |> List.insert_at(index_to_insert, Enum.at(source_tower, index_to_retrieve))
 
     source_tower = source_tower |> List.update_at(index_to_retrieve, &(&1 = empty_place))
+
+    tower
+    |> List.update_at(source - 1, &(&1 = source_tower))
+    |> List.update_at(target - 1, &(&1 = target_tower))
+    |> Enum.map(fn x -> x |> Enum.reject(fn y -> y == empty_place end) end)
+  end
+
+  def move_stack(tower, amount, source, target) do
+    empty_place = " "
+    source_tower = tower |> Enum.at(source - 1)
+    index_to_retrieve = source_tower |> Enum.find_index(fn x -> x != empty_place end) || 0
+
+    stack = source_tower |> Enum.slice(index_to_retrieve..(amount - 1)) |> Enum.reverse()
+
+    target_tower = tower |> Enum.at(target - 1)
+    index_to_insert = target_tower |> Enum.find_index(fn x -> x != empty_place end) || 0
+
+    target_tower =
+      stack
+      |> Enum.reduce(target_tower, fn x, acc -> acc |> List.insert_at(index_to_insert, x) end)
+
+    source_tower = source_tower |> Enum.drop(amount)
 
     tower
     |> List.update_at(source - 1, &(&1 = source_tower))

@@ -121,6 +121,30 @@ defmodule Adventofcode2022 do
     |> Enum.join()
   end
 
+  def day5p2(input) do
+    chunks =
+      input
+      |> chunk_by_empty
+
+    instructions = chunks |> Enum.at(1) |> Enum.map(fn x -> x |> parse_instruction end)
+
+    tower =
+      chunks
+      |> Enum.at(0)
+      |> Enum.reverse()
+      |> Enum.map(fn x -> x |> String.graphemes() |> Enum.drop(1) |> Enum.take_every(4) end)
+      |> Enum.drop(1)
+      |> Enum.zip()
+      |> Enum.map(fn x -> x |> Tuple.to_list() |> Enum.reverse() end)
+
+    instructions
+    |> Enum.reduce(tower, fn x, acc ->
+      acc |> move_stack(elem(x, 0), elem(x, 1), elem(x, 2))
+    end)
+    |> Enum.map(fn x -> x |> hd end)
+    |> Enum.join()
+  end
+
   def day6p1(input) do
     input |> find_marker(4)
   end
