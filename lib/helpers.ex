@@ -255,25 +255,30 @@ defmodule Helpers do
   def parse_instruction(instruction) do
     split = instruction |> String.split(" ")
 
-    {split |> Enum.at(1) |> String.to_integer, split |> Enum.at(3) |> String.to_integer, split |> Enum.at(5) |> String.to_integer} 
+    {split |> Enum.at(1) |> String.to_integer(), split |> Enum.at(3) |> String.to_integer(),
+     split |> Enum.at(5) |> String.to_integer()}
   end
 
   def execute_instruction(tower, move_amount, source, target) do
-    (1..move_amount) |> Enum.reduce(tower, fn _, acc -> move_top(acc, source, target) end)
+    1..move_amount |> Enum.reduce(tower, fn _, acc -> move_top(acc, source, target) end)
   end
 
   def move_top(tower, source, target) do
     empty_place = " "
-    source_tower = tower |> Enum.at(source-1)
+    source_tower = tower |> Enum.at(source - 1)
     index_to_retrieve = source_tower |> Enum.find_index(fn x -> x != empty_place end) || -1
-    target_tower = tower |> Enum.at(target-1)
+    target_tower = tower |> Enum.at(target - 1)
     index_to_insert = target_tower |> Enum.find_index(fn x -> x != empty_place end) || -1
 
+    target_tower =
+      target_tower |> List.insert_at(index_to_insert, Enum.at(source_tower, index_to_retrieve))
 
-    target_tower = target_tower |> List.insert_at(index_to_insert, Enum.at(source_tower, index_to_retrieve)) 
     source_tower = source_tower |> List.update_at(index_to_retrieve, &(&1 = empty_place))
 
-    tower |> List.update_at(source-1, &(&1 = source_tower)) |> List.update_at(target-1, &(&1 = target_tower)) |> Enum.map(fn x -> x |> Enum.reject(fn y -> y == empty_place end) end)
+    tower
+    |> List.update_at(source - 1, &(&1 = source_tower))
+    |> List.update_at(target - 1, &(&1 = target_tower))
+    |> Enum.map(fn x -> x |> Enum.reject(fn y -> y == empty_place end) end)
   end
 
   def find_marker(input, seq_len) do
