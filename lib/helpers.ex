@@ -253,17 +253,10 @@ defmodule Helpers do
   end
 
   def find_marker(input, seq_len) do
-    graph = input |> String.graphemes()
-
-    (Enum.to_list(0..String.length(input))
-     |> Enum.map(fn x ->
-       graph
-       |> Enum.drop(x)
-       |> Enum.take(seq_len)
-       |> Enum.frequencies()
-       |> Map.values()
-       |> Enum.all?(fn x -> x == 1 end)
-     end)
-     |> Enum.find_index(fn x -> x == true end)) + seq_len
+    (input
+    |> String.graphemes
+    |> Enum.chunk_every(seq_len, 1, :discard)
+    |> Enum.map(fn x -> x |> Enum.frequencies |> Map.values |> Enum.all?(fn y -> y == 1 end) end)
+    |> Enum.find_index(fn z -> z == true end)) + seq_len
   end
 end
