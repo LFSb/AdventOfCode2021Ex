@@ -245,10 +245,10 @@ defmodule Helpers do
   end
 
   def build_tower(input) do
-    input 
-    |> Enum.reverse
-    |> Enum.map(fn x -> x |> String.graphemes |> Enum.drop(1) |> Enum.take_every(4) end)
+    input
+    |> Enum.reverse()
+    |> Enum.map(fn x -> x |> String.graphemes() |> Enum.drop(1) |> Enum.take_every(4) end)
     |> Enum.drop(1)
-    |> Enum.zip
+    |> Enum.zip()
   end
 end

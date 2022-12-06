@@ -85,7 +85,9 @@ defmodule Adventofcode2022Test do
   end
 
   test "day5p1 test tower input" do
-    assert ["    [D]    ", "[N] [C]    ", "[Z] [M] [P]", " 1   2   3 "] |> build_tower |> Enum.at(0) == {"Z", "N", " "}
+    assert ["    [D]    ", "[N] [C]    ", "[Z] [M] [P]", " 1   2   3 "]
+           |> build_tower
+           |> Enum.at(0) == {"Z", "N", " "}
   end
 
   test "day6p1 testinput #1" do
@@ -99,7 +101,7 @@ defmodule Adventofcode2022Test do
   test "day6p1 testinput #3" do
     assert "nppdvjthqldpwncqszvftbrmjlhg" |> Adventofcode2022.day6p1() == 6
   end
-  
+
   test "day6p1 testinput #4" do
     assert "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg" |> Adventofcode2022.day6p1() == 10
   end
@@ -111,5 +113,4 @@ defmodule Adventofcode2022Test do
   test "day6p1 realinput" do
     assert readLinesForDay("6", "2022") |> Adventofcode2022.day6p1() == 0
   end
-
 end

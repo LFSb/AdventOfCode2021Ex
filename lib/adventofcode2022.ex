@@ -104,15 +104,24 @@ defmodule Adventofcode2022 do
       |> Enum.at(0)
 
     tower
-    |> Enum.reverse
+    |> Enum.reverse()
     |> Enum.map(fn x -> x |> String.graphemes() |> Enum.drop(1) |> Enum.take_every(4) end)
     |> Enum.drop(1)
-    |> Enum.zip
+    |> Enum.zip()
   end
 
   def day6p1(input) do
-    graph = input |> String.graphemes
+    graph = input |> String.graphemes()
 
-    (Enum.to_list(0..String.length(input)) |> Enum.map(fn x -> graph |> Enum.drop(x) |> Enum.take(4) |> Enum.frequencies |> Map.values |> Enum.all?(fn x -> x == 1 end) end) |> Enum.find_index(fn x -> x == true end)) + 4
+    (Enum.to_list(0..String.length(input))
+     |> Enum.map(fn x ->
+       graph
+       |> Enum.drop(x)
+       |> Enum.take(4)
+       |> Enum.frequencies()
+       |> Map.values()
+       |> Enum.all?(fn x -> x == 1 end)
+     end)
+     |> Enum.find_index(fn x -> x == true end)) + 4
   end
 end
