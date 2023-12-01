@@ -5,7 +5,7 @@ defmodule FileUtils do
 
   def readSplitLinesForDay(day, year) do
     readLinesForDay(day, year)
-    |> String.split("\n")
+    |> String.split("\n", trim: true)
   end
 
   def readSplitLinesAsNumbersForDay(day, year) do
