@@ -16,8 +16,9 @@ defmodule Adventofcode2023 do
     input
     |> Enum.map(fn line ->
       keys
-      |> Enum.filter(fn key -> String.contains?(line, key) end)
-      |> Enum.sort_by(fn occ -> String.split(line, occ) |> List.first() |> String.length end)
+      |> Enum.filter(fn key -> String.contains?(line, key) end) # First, we filter out all the keys that actually occur in the current line.
+      |> Enum.sort_by(fn occ -> String.split(line, occ) |> List.last() |> String.length end) # Then, we sort them by occurance, so we order them right.
+      |> Enum.reverse()
     end)
     |> Enum.map(fn line ->
       line
