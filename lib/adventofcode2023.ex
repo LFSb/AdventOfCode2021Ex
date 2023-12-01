@@ -8,24 +8,14 @@ defmodule Adventofcode2023 do
   end
 
   def day1p2(input) do
-    words = %{"one" => "1", "two" => "2", "three" => "3", "four" => "4", "five" => "5", "six" => "6", "seven" => "7", "eight" => "8", "nine" => "9"}
-    numbers = Map.new(words, fn {key, val} -> {val, key} end)
-    dict = Map.merge(words, numbers)
+    dict = %{"one" => "o1e", "two" => "t2o", "three" => "t3e", "four" => "f4r", "five" => "f5e", "six" => "s6x", "seven" => "s7n", "eight" => "e8t", "nine" => "n9e"}
     keys = dict |> Map.keys
 
     input
     |> Enum.map(fn line ->
       keys
-      |> Enum.filter(fn key -> String.contains?(line, key) end) # First, we filter out all the keys that actually occur in the current line.
-      |> Enum.sort_by(fn occ -> String.split(line, occ) |> List.last() |> String.length end) # Then, we sort them by occurance, so we order them right.
-      |> Enum.reverse()
+      |> Enum.reduce(line, fn key, acc -> String.replace(acc, key, dict[key]) end)
     end)
-    |> Enum.map(fn line ->
-      line
-      |> Enum.map(fn el -> if Map.has_key?(words, el), do: words[el], else: el end)
-    end)
-    |> Enum.map(fn digits -> List.first(digits) <> List.last(digits) end)
-    |> Enum.map(&String.to_integer/1)
-    |> Enum.sum()
+    |> day1p1
   end
 end
